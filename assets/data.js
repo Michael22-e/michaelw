@@ -12,7 +12,7 @@ window.CATEGORIES = [
 ];
 window.SITES = [
   {
-    "name": "示例 · 百度",
+    "name": "百度",
     "url": "https://www.baidu.com",
     "description": "国内常用搜索引擎，信息检索入口。",
     "category": "常用工具"
@@ -24,7 +24,7 @@ window.SITES = [
     "category": "开发技术"
   },
   {
-    "name": "示例 · 知乎",
+    "name": "知乎",
     "url": "https://www.zhihu.com",
     "description": "中文问答社区，经验与观点交流平台。",
     "category": "社区论坛"
