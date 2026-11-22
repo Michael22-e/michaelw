@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Michael.W 个人网址导航：精选常用工具、学习资料、开发技术、影音娱乐、社区论坛等站点。">
+  <title>Michael.W · 网址导航</title>
+  <style>
+    :root {
+      --bg: #080d1d;
+      --panel: rgba(24, 34, 58, .6);
+      --panel-2: rgba(14, 22, 40, .6);
+      --border: rgba(120, 140, 200, .16);
+      --border-strong: rgba(120, 140, 200, .28);
+      --text: #e8ecf5;
+      --muted: #93a0bd;
+      --faint: #6b7694;
+      --accent: #5b8cff;
+      --blue: #7db4ff;
+      --purple: #b79cff;
+      --cyan: #38bdf8;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; color: var(--text);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", system-ui, sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(1200px 800px at 12% -5%, rgba(38, 72, 158, .38), transparent 60%),
+        radial-gradient(1000px 700px at 95% 15%, rgba(88, 52, 140, .30), transparent 60%),
+        radial-gradient(900px 600px at 50% 110%, rgba(18, 78, 98, .30), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -1;
+      background-image:
+        linear-gradient(rgba(120, 150, 220, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 150, 220, .07) 1px, transparent 1px);
+      background-size: 40px 40px;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 25%, transparent 82%);
+      mask-image: radial-gradient(ellipse at 50% 0%, #000 25%, transparent 82%);
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+    /* 顶部导航 */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(8, 13, 29, .55);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; min-height: 60px; flex-wrap: wrap;
+    }
+    .brand { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: .5px; }
+    .brand:hover { text-decoration: none; }
+    .topnav { display: flex; gap: 20px; flex-wrap: wrap; }
+    .topnav a { color: var(--muted); font-size: 14px; }
+    .topnav a:hover { color: var(--text); text-decoration: none; }
+
+    /* Hero */
+    .hero { margin: 44px 0 28px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--blue);
+      background: rgba(38, 72, 158, .18);
+      border: 1px solid rgba(91, 140, 255, .25);
+      border-radius: 999px; padding: 6px 14px;
+    }
+    .hero-tag .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+    }
+    .hero-title {
+      margin: 20px 0 12px; font-size: clamp(38px, 6vw, 58px);
+      font-weight: 800; letter-spacing: 1px; line-height: 1.15;
+    }
+    .hero-title .grad {
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-sub { color: var(--muted); font-size: 15px; margin: 0 0 18px; max-width: 620px; }
+    .hero-stats {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+      color: var(--muted); font-size: 14px; margin-bottom: 26px;
+    }
+    .hero-stats strong { color: var(--text); font-weight: 700; }
+    .hero-stats .sep { color: var(--faint); }
+
+    /* 搜索面板 */
+    .search-panel {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 22px; padding: 18px; backdrop-filter: blur(10px);
+    }
+    .search-box { position: relative; }
+    .search-icon {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; color: var(--faint); pointer-events: none;
+    }
+    .search-box input {
+      width: 100%; padding: 14px 16px 14px 46px; font-size: 15px; color: var(--text);
+      background: var(--panel-2); border: 1px solid var(--border); border-radius: 14px; outline: none;
+    }
+    .search-box input:focus { border-color: rgba(91, 140, 255, .5); }
+    .search-box input::placeholder { color: var(--faint); }
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 15px; font-size: 13px; color: var(--muted);
+      background: var(--panel-2); border: 1px solid var(--border);
+      border-radius: 999px; cursor: pointer;
+    }
+    .chip:hover { color: var(--text); }
+    .chip.active {
+      color: #fff; background: rgba(220, 228, 245, .12);
+      border-color: rgba(160, 180, 230, .32);
+    }
+    .chip-count { font-size: 11px; color: var(--faint); }
+    .chip.active .chip-count { color: #b9c4de; }
+
+    /* 分组与卡片 */
+    .group { margin: 34px 0; }
+    .group-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 12px; margin-bottom: 16px;
+    }
+    .group-title { font-size: 18px; margin: 0; font-weight: 700; }
+    .group-count { font-size: 13px; color: var(--faint); }
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px;
+    }
+    .card {
+      position: relative; display: block;
+      background: linear-gradient(160deg, rgba(32, 44, 74, .55), rgba(18, 24, 44, .55));
+      border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+      color: var(--text); transition: border-color .15s, transform .15s, background .15s;
+    }
+    .card:hover {
+      border-color: rgba(91, 140, 255, .45);
+      background: linear-gradient(160deg, rgba(40, 54, 88, .6), rgba(22, 30, 52, .6));
+      transform: translateY(-3px); text-decoration: none;
+    }
+    .card-cat {
+      display: inline-block; font-size: 12px; color: var(--blue);
+      background: rgba(91, 140, 255, .12); border: 1px solid rgba(91, 140, 255, .25);
+      border-radius: 8px; padding: 3px 10px;
+    }
+    .card-arrow { position: absolute; top: 22px; right: 22px; color: var(--faint); font-size: 15px; }
+    .card:hover .card-arrow { color: var(--blue); }
+    .card-name { font-size: 17px; font-weight: 700; margin: 16px 0 8px; }
+    .card-desc { margin: 0 0 16px; color: var(--muted); font-size: 13px; min-height: 40px; }
+    .card-url { font-size: 12px; color: var(--faint); word-break: break-all; }
+
+    .empty-state { text-align: center; color: var(--muted); padding: 52px 16px; }
+    .footer {
+      margin-top: 56px; padding: 20px 16px 34px;
+      color: var(--faint); font-size: 13px; text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .hero { margin: 28px 0 20px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .topbar-inner { padding: 10px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="./">✦ Michael.W</a>
+      <nav class="topnav">
+        <a href="./">首页</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="hero-tag"><span class="dot"></span>网址导航索引</span>
+      <h1 class="hero-title">Michael<span class="grad">.W</span></h1>
+      <p class="hero-sub">收录好用的网站，挑一个点开逛逛。</p>
+      <div class="hero-stats">
+        <span><strong id="stat-total">0</strong> 个站点</span>
+        <span class="sep">·</span>
+        <span><strong id="stat-cats">0</strong> 个分类</span>
+        <span class="sep">·</span>
+        <span>持续更新中</span>
+      </div>
+
+      <div class="search-panel">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
+          <input type="search" id="search-input" placeholder="搜索名称、分类或网址…" autocomplete="off">
+        </div>
+        <div class="filter-bar" id="filter-bar"></div>
+      </div>
+    </section>
+
+    <div id="nav-list"></div>
+
+    <div class="empty-state" id="no-result" hidden>
+      <p>没有匹配的网站，换个关键词试试。</p>
+    </div>
+  </main>
+
+  <footer class="footer container">
+    <span>Michael.W · 纯静态个人导航</span>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script>
+  (function () {
+    var CATEGORIES = window.CATEGORIES || [];
+    var SITES = window.SITES || [];
+
+    var listEl = document.getElementById('nav-list');
+    var filterBar = document.getElementById('filter-bar');
+    var input = document.getElementById('search-input');
+    var noResult = document.getElementById('no-result');
+    var activeCategory = 'all';
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s);
+    }
+
+    // 按预设分类顺序分组
+    function groupSites(sites) {
+      var grouped = {};
+      CATEGORIES.forEach(function (c) { grouped[c] = []; });
+      sites.forEach(function (s) {
+        if (!grouped[s.category]) grouped[s.category] = [];
+        grouped[s.category].push(s);
+      });
+      return grouped;
+    }
+
+    function render() {
+      var grouped = groupSites(SITES);
+      var catsUsed = CATEGORIES.filter(function (c) { return grouped[c].length > 0; });
+
+      document.getElementById('stat-total').textContent = SITES.length;
+      document.getElementById('stat-cats').textContent = catsUsed.length;
+
+      // 分类胶囊
+      filterBar.innerHTML = '';
+      makeChip('all', '全部', SITES.length, true);
+      catsUsed.forEach(function (cat) {
+        makeChip(cat, cat, grouped[cat].length, false);
+      });
+
+      // 分组卡片
+      listEl.innerHTML = '';
+      catsUsed.forEach(function (cat) {
+        var section = document.createElement('section');
+        section.className = 'group';
+        section.dataset.group = cat;
+
+        var head = document.createElement('div');
+        head.className = 'group-head';
+        var h2 = document.createElement('h2');
+        h2.className = 'group-title';
+        h2.textContent = cat;
+        var cnt = document.createElement('span');
+        cnt.className = 'group-count';
+        cnt.textContent = '共 ' + grouped[cat].length + ' 个站点';
+        head.appendChild(h2); head.appendChild(cnt);
+
+        var grid = document.createElement('div');
+        grid.className = 'card-grid';
+        grouped[cat].forEach(function (s) {
+          grid.appendChild(makeCard(s));
+        });
+
+        section.appendChild(head); section.appendChild(grid);
+        listEl.appendChild(section);
+      });
+
+      if (SITES.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'empty-state';
+        var p = document.createElement('p');
+        p.textContent = '暂无收录站点，请用本地管理工具添加。';
+        empty.appendChild(p);
+        listEl.appendChild(empty);
+      }
+      applyFilter();
+    }
+
+    function makeChip(cat, label, count, active) {
+      var btn = document.createElement('button');
+      btn.className = 'chip' + (active ? ' active' : '');
+      btn.dataset.category = cat;
+      var name = document.createElement('span');
+      name.textContent = label;
+      var c = document.createElement('span');
+      c.className = 'chip-count';
+      c.textContent = count;
+      btn.appendChild(name); btn.appendChild(c);
+      btn.addEventListener('click', function () {
+        filterBar.querySelectorAll('.chip').forEach(function (x) { x.classList.remove('active'); });
+        btn.classList.add('active');
+        activeCategory = cat;
+        applyFilter();
+      });
+      filterBar.appendChild(btn);
+    }
+
+    function makeCard(s) {
+      var a = document.createElement('a');
+      a.className = 'card';
+      a.href = s.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.dataset.name = s.name;
+      a.dataset.desc = s.description || '';
+      a.dataset.url = s.url;
+      a.dataset.category = s.category;
+
+      var arrow = document.createElement('span');
+      arrow.className = 'card-arrow';
+      arrow.textContent = '↗';
+      var cat = document.createElement('span');
+      cat.className = 'card-cat';
+      cat.textContent = s.category;
+      var name = document.createElement('h3');
+      name.className = 'card-name';
+      name.textContent = s.name;
+      var desc = document.createElement('p');
+      desc.className = 'card-desc';
+      desc.textContent = s.description || '';
+      var url = document.createElement('span');
+      url.className = 'card-url';
+      url.textContent = s.url;
+
+      a.appendChild(arrow); a.appendChild(cat); a.appendChild(name);
+      a.appendChild(desc); a.appendChild(url);
+      return a;
+    }
+
+    function applyFilter() {
+      var q = (input.value || '').trim().toLowerCase();
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+      var groups = Array.prototype.slice.call(document.querySelectorAll('.group'));
+      var visible = 0;
+
+      cards.forEach(function (card) {
+        var name = (card.dataset.name || '').toLowerCase();
+        var desc = (card.dataset.desc || '').toLowerCase();
+        var url = (card.dataset.url || '').toLowerCase();
+        var cat = card.dataset.category || '';
+        var matchQ = !q || name.indexOf(q) >= 0 || desc.indexOf(q) >= 0 || url.indexOf(q) >= 0;
+        var matchC = activeCategory === 'all' || cat === activeCategory;
+        var show = matchQ && matchC;
+        card.style.display = show ? '' : 'none';
+        if (show) visible += 1;
+      });
+
+      groups.forEach(function (g) {
+        var hasVisible = Array.prototype.slice.call(g.querySelectorAll('.card'))
+          .some(function (c) { return c.style.display !== 'none'; });
+        g.style.display = hasVisible ? '' : 'none';
+      });
+      noResult.hidden = visible !== 0;
+    }
+
+    input.addEventListener('input', applyFilter);
+    render();
+  })();
+  </script>
+</body>
+</html>
